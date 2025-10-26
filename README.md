@@ -4,6 +4,12 @@
 [https://dev.to/klo2k/create-ubuntu-24042-vm-in-hyper-v-with-enhanced-session-rdp-support-windows-11-xrdp-1omk#configure-vm-for-enhanced-session-allow-nested-virtualisation](https://dev.to/klo2k/create-ubuntu-24042-vm-in-hyper-v-with-enhanced-session-rdp-support-windows-11-xrdp-1omk#configure-vm-for-enhanced-session-allow-nested-virtualisation)
 
 ---
+## Create a new Hyper-V Virtual Machine with Ubuntu 24.04 guest OS
+- Enable `Allow enhanced session mode` in Hyper-V Settings
+- VM must be Generation 2
+- Must enable Secure Boot with `Microsoft UEFI Certificate Authority`
+- RAM: 6144 MB (or reduce zram below)
+- Execute `Set-VM -VMName 'Ubuntu 24.04' -EnhancedSessionTransportType HvSocket` in an elevated Powershell
 
 ## Main Commands (Run as root)
 
