@@ -104,4 +104,24 @@ cp -p /etc/fstab /etc/fstab.original
 sed -i -e 's@^/swap.img@#/swap.img@g' /etc/fstab
 swapoff /swap.img
 rm /swap.img
+
+# Optional: Switch to the VNC Backend.
+# In Feb 2025 one of the Ubuntu update caused a performance regression with the Xorg backend (even on 1920x1080)
+# Install TigerVNC
+apt install -y tigervnc-standalone-server tigervnc-xorg-extension
+# Configure tigervnc backend
+cp -p /etc/xrdp/sesman.ini /etc/xrdp/sesman.ini.20250213
+sed -z -i -e \
+'s/'\
+'\(\[Xvnc\].*\nparam=96\n\)\n\[/'\
+'\1param=-CompareFB\nparam=1\nparam=-ZlibLevel\nparam=0\nparam=-geometry\nparam=1920x1080\n\n[/'\
+'gi' /etc/xrdp/sesman.ini
+# Remove Xorg backend
+sed -z -i -e \
+'s/'\
+'\[Xorg\].*\ncode=20\n\n\[/'\
+'[/'\
+'gi' /etc/xrdp/xrdp.ini
+
+reboot
 ```
