@@ -112,13 +112,14 @@ rm /swap.img
 # Install TigerVNC
 apt install -y tigervnc-standalone-server tigervnc-xorg-extension
 # Configure tigervnc backend
-cp -p /etc/xrdp/sesman.ini /etc/xrdp/sesman.ini.20250213
+cp -p /etc/xrdp/sesman.ini /etc/xrdp/sesman.ini.Xorg
 sed -z -i -e \
 's/'\
 '\(\[Xvnc\].*\nparam=96\n\)\n\[/'\
 '\1param=-CompareFB\nparam=1\nparam=-ZlibLevel\nparam=0\nparam=-geometry\nparam=1920x1080\n\n[/'\
 'gi' /etc/xrdp/sesman.ini
 # Remove Xorg backend
+cp -p /etc/xrdp/xrdp.ini /etc/xrdp/xrdp.ini.Xorg
 sed -z -i -e \
 's/'\
 '\[Xorg\].*\ncode=20\n\n\[/'\
