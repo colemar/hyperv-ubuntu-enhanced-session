@@ -10,7 +10,7 @@
 - Enable `Allow enhanced session mode` in Hyper-V Settings
 - VM must be Generation 2
 - Must enable Secure Boot with `Microsoft UEFI Certificate Authority`
-- RAM: 6144 MB (if less then reduce zram below)
+- RAM: 6144 MB (if less then reduce zram-size below)
 - Execute in an elevated Powershell:
   - `Set-VM -VMName 'vmname' -EnhancedSessionTransportType HvSocket`
   - `(Get-VM -VMName 'CAPEv2').EnhancedSessionTransportType`
