@@ -13,7 +13,7 @@ If you create the Virtual Machine using Hyper-V's Quick Create feature, you don'
 - VM must be Generation 2
 - Must enable Secure Boot with `Microsoft UEFI Certificate Authority`
 - RAM: 6144 MB (if less then reduce zram-size below)
-- Disable Dynamic Memory, expecially if Maximum RAM is huge. Leaving it enabled can cause **hard-to-diagnose stability issues**, such as intermittent Gnome Session failures at login.
+- Disable Dynamic Memory, expecially if Maximum RAM is near the host physical RAM size. Leaving it enabled can cause **hard-to-diagnose stability issues**, such as intermittent Gnome Session failures at login.
 - Execute in an elevated Powershell:
   - `Set-VM -VMName 'vmname' -EnhancedSessionTransportType HvSocket`
   - `(Get-VM -VMName 'vmname').EnhancedSessionTransportType`
