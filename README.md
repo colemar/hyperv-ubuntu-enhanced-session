@@ -18,7 +18,7 @@
   - `(Get-VMProcessor -VMName 'vmname').ExposeVirtualizationExtensions`
 - Make sure `Require my password to log in` is enabled while installing guest OS.
 
-## Main Commands (Run as root)
+## Run as root in guest OS terminal:
 
 ```bash
 # Update system and install Hyper-V integration services
