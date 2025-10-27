@@ -13,7 +13,7 @@
 - RAM: 6144 MB (if less then reduce zram-size below)
 - Execute in an elevated Powershell:
   - `Set-VM -VMName 'vmname' -EnhancedSessionTransportType HvSocket`
-  - `(Get-VM -VMName 'CAPEv2').EnhancedSessionTransportType`
+  - `(Get-VM -VMName 'vmname').EnhancedSessionTransportType`
   - `Set-VMProcessor -VMName 'vmname' -ExposeVirtualizationExtensions $true`
   - `(Get-VMProcessor -VMName 'vmname').ExposeVirtualizationExtensions`
 - Make sure `Require my password to log in` is enabled while installing guest OS.
