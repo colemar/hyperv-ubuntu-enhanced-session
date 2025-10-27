@@ -1,7 +1,7 @@
 # Ubuntu 24.04 VM on Hyper-V with Enhanced Session Configuration
 
 **Original Source:** The commands and procedure described in this file are adapted from the guide by **klo2k** on dev.to. Please refer to the original article for the full context and any updates:
-[https://dev.to/klo2k/create-ubuntu-24042-vm-in-hyper-v-with-enhanced-session-rdp-support-windows-11-xrdp-1omk#configure-vm-for-enhanced-session-allow-nested-virtualisation](https://dev.to/klo2k/create-ubuntu-24042-vm-in-hyper-v-with-enhanced-session-rdp-support-windows-11-xrdp-1omk#configure-vm-for-enhanced-session-allow-nested-virtualisation)
+[Create Ubuntu 24.04.2 VM in Hyper-V, with "Enhanced Session" RDP support (Windows 11, xrdp, development)](https://dev.to/klo2k/create-ubuntu-24042-vm-in-hyper-v-with-enhanced-session-rdp-support-windows-11-xrdp-1omk)
 
 ---
 
