@@ -5,6 +5,8 @@
 
 ---
 
+If you create the Virtual Machine using Hyper-V's Quick Create feature, you don't need the steps in this tutorial.
+
 ## Create a new Hyper-V Virtual Machine with Ubuntu 24.04 guest OS (or import/convert it from existing VM)
 
 - Enable `Allow enhanced session mode` in Hyper-V Settings
