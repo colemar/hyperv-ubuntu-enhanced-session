@@ -4,19 +4,26 @@
 [https://dev.to/klo2k/create-ubuntu-24042-vm-in-hyper-v-with-enhanced-session-rdp-support-windows-11-xrdp-1omk#configure-vm-for-enhanced-session-allow-nested-virtualisation](https://dev.to/klo2k/create-ubuntu-24042-vm-in-hyper-v-with-enhanced-session-rdp-support-windows-11-xrdp-1omk#configure-vm-for-enhanced-session-allow-nested-virtualisation)
 
 ---
-## Create a new Hyper-V Virtual Machine with Ubuntu 24.04 guest OS
+
+## Create a new Hyper-V Virtual Machine with Ubuntu 24.04 guest OS (or import/convert it from existing VM)
+
 - Enable `Allow enhanced session mode` in Hyper-V Settings
 - VM must be Generation 2
 - Must enable Secure Boot with `Microsoft UEFI Certificate Authority`
-- RAM: 6144 MB (or reduce zram below)
-- Execute `Set-VM -VMName 'Ubuntu 24.04' -EnhancedSessionTransportType HvSocket` in an elevated Powershell
+- RAM: 6144 MB (if less then reduce zram below)
+- Execute in an elevated Powershell:
+  - `Set-VM -VMName 'vmname' -EnhancedSessionTransportType HvSocket`
+  - `(Get-VM -VMName 'CAPEv2').EnhancedSessionTransportType`
+  - `Set-VMProcessor -VMName 'vmname' -ExposeVirtualizationExtensions $true`
+  - `(Get-VMProcessor -VMName 'vmname').ExposeVirtualizationExtensions`
+- Make sure `Require my password to log in` is enabled while installing guest OS.
 
 ## Main Commands (Run as root)
 
 ```bash
 # Update system and install Hyper-V integration services
 apt update && apt upgrade -y
-apt install -y linux-tools-virtual-hwe-24.04 linux-cloud-tools-virtual-hwe-24.04
+apt install -y linux-tools-virtual linux-cloud-tools-virtual
 
 # Fix KVP daemon log errors
 mkdir -p /usr/libexec/hypervkvpd/
@@ -75,4 +82,26 @@ EOT
 
 # Apply changes and restart service (Do this *before* rebooting)
 systemctl restart xrdp
+
+# Optional: Show boot log instead of splash screen and reduce grub fail timeout
+cp -p /etc/default/grub /etc/default/grub.default
+sed -i -e 's/GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=""/g' /etc/default/grub
+echo 'GRUB_RECORDFAIL_TIMEOUT=3' >> /etc/default/grub
+update-grub
+
+# Optional: Replace swap file with ZRAM (adjust zram-size as needed, e.g., half of VM RAM)
+apt install -y systemd-zram-generator
+cp -p /etc/systemd/zram-generator.conf /etc/systemd/zram-generator.conf.original
+cat > /etc/systemd/zram-generator.conf <<'EOT'
+[zram0]
+zram-size = 4096 # Example: 4GB for a 6-8GB VM
+compression-algorithm = zstd
+EOT
+systemctl daemon-reload
+systemctl restart systemd-zram-setup@zram0
+# Disable and remove old swap file
+cp -p /etc/fstab /etc/fstab.original
+sed -i -e 's@^/swap.img@#/swap.img@g' /etc/fstab
+swapoff /swap.img
+rm /swap.img
 ```
